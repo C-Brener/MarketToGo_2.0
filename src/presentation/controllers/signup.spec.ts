@@ -42,7 +42,8 @@ describe('SignUp Controller', () => {
       body: {
         email: 'any@gmail.com',
         password: 'any_password',
-        confirmPassword: 'any_confirm_password'
+        confirmPassword: 'any_confirm_password',
+        phoneNumber: '719999999'
       }
     }
     const response = sut.handle(httpRequest)
@@ -56,12 +57,27 @@ describe('SignUp Controller', () => {
       body: {
         name: 'any_name',
         password: 'any_password',
-        confirmPassword: 'any_confirm_password'
+        confirmPassword: 'any_confirm_password',
+        phoneNumber: '719999999'
       }
     }
     const response = sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual(new MissingParamError('email'))
+  })
+
+  test('Should return 400 if no phoneNumber is provided', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any@gmail.com',
+        password: 'any_password',
+        confirmPassword: 'any_confirm_password'
+      }
+    }
+    const response = sut.handle(httpRequest)
+    expect(response.statusCode).toBe(400)
   })
 
   test('Should return 400 if no password is provided', () => {
@@ -70,7 +86,8 @@ describe('SignUp Controller', () => {
       body: {
         name: 'any_name',
         email: 'any@gmail.com',
-        confirmPassword: 'any_confirm_password'
+        confirmPassword: 'any_confirm_password',
+        phoneNumber: '719999999'
       }
     }
     const response = sut.handle(httpRequest)
@@ -84,7 +101,8 @@ describe('SignUp Controller', () => {
       body: {
         name: 'any_name',
         email: 'any@gmail.com',
-        password: 'any_password'
+        password: 'any_password',
+        phoneNumber: '719999999'
       }
     }
     const response = sut.handle(httpRequest)
@@ -102,7 +120,8 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'invalid_email@gmail.com',
         password: 'any_password',
-        confirmPassword: 'any_confirm_password'
+        confirmPassword: 'any_confirm_password',
+        phoneNumber: '719999999'
       }
     }
     const response = sut.handle(httpRequest)
@@ -122,7 +141,8 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'any@gmail.com',
         password: 'any_password',
-        confirmPassword: 'any_confirm_password'
+        confirmPassword: 'any_confirm_password',
+        phoneNumber: '719999999'
       }
     }
     sut.handle(httpRequest)
@@ -139,7 +159,8 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'invalid_email@gmail.com',
         password: 'any_password',
-        confirmPassword: 'any_confirm_password'
+        confirmPassword: 'any_confirm_password',
+        phoneNumber: '719999999'
       }
     }
     const response = sut.handle(httpRequest)
