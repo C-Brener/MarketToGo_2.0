@@ -1,10 +1,8 @@
 import type { HttpResponse, HttpRequest } from '../procotols/http'
 import type { Controller } from '../procotols/controller'
-import { MissingParamError } from '../erros/missing-param-error'
-import { badRequest } from './helpers/http-helper'
+import { MissingParamError, InvalidParamError } from '../erros'
+import { badRequest, serverError } from './helpers/http-helper'
 import type { EmailValidator } from '../procotols/email-validator'
-import { InvalidParamError } from '../erros/invalid-param-error'
-import { ServerError } from '../erros/server-error'
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator
@@ -30,10 +28,7 @@ export class SignUpController implements Controller {
         body: { message: 'User signed' }
       }
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: new ServerError()
-      }
+      return serverError()
     }
   }
 }
