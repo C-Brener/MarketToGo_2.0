@@ -1,8 +1,6 @@
-import type { HttpResponse, HttpRequest } from '../procotols/http'
-import type { Controller } from '../procotols/controller'
+import type { Controller, EmailValidator, HttpRequest, HttpResponse } from '../procotols'
 import { MissingParamError, InvalidParamError } from '../erros'
 import { badRequest, serverError } from './helpers/http-helper'
-import type { EmailValidator } from '../procotols/email-validator'
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator
