@@ -101,6 +101,22 @@ describe('SignUp Controller', () => {
     expect(response.body).toEqual(new MissingParamError('confirmPassword'))
   })
 
+  test('Should return 400 if if passwordConfirmation failed', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any@gmail.com',
+        password: 'any_password',
+        confirmPassword: 'invalid_passaword',
+        phoneNumber: '719999999'
+      }
+    }
+    const response = sut.handle(httpRequest)
+    expect(response.statusCode).toBe(400)
+    expect(response.body).toEqual(new InvalidParamError('confirmPassword'))
+  })
+
   test('Should return 400 if an invalid email is provided', () => {
     // GIVEN
     const { sut, emailValidatorStub } = makeSut()
@@ -111,7 +127,7 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'invalid_email@gmail.com',
         password: 'any_password',
-        confirmPassword: 'any_confirm_password',
+        confirmPassword: 'any_password',
         phoneNumber: '719999999'
       }
     }
@@ -132,7 +148,7 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'any@gmail.com',
         password: 'any_password',
-        confirmPassword: 'any_confirm_password',
+        confirmPassword: 'any_password',
         phoneNumber: '719999999'
       }
     }
@@ -152,7 +168,7 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'invalid_email@gmail.com',
         password: 'any_password',
-        confirmPassword: 'any_confirm_password',
+        confirmPassword: 'any_password',
         phoneNumber: '719999999'
       }
     }
