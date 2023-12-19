@@ -1,12 +1,14 @@
-import type { Controller, EmailValidator, HttpRequest, HttpResponse } from '../protocols'
+import type { Controller, EmailValidator, HttpRequest, HttpResponse, PhoneNumberValidator } from '../protocols'
 import { MissingParamError, InvalidParamError } from '../errors'
 import { badRequest, serverError } from './helpers/http-helper'
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator
+  private readonly phoneNumberValidator: PhoneNumberValidator
 
-  constructor (emailValidator: EmailValidator) {
+  constructor (emailValidator: EmailValidator, phoneNumberValidator: PhoneNumberValidator) {
     this.emailValidator = emailValidator
+    this.phoneNumberValidator = phoneNumberValidator
   }
 
   handle (httpRequest: HttpRequest): HttpResponse {
@@ -17,14 +19,22 @@ export class SignUpController implements Controller {
           return badRequest(new MissingParamError(field))
         }
       }
-      const { email, password, confirmPassword } = httpRequest.body
+
+      const { email, password, confirmPassword, phoneNumber } = httpRequest.body
       if (password !== confirmPassword) {
         return badRequest(new InvalidParamError('confirmPassword'))
       }
-      const isValid = this.emailValidator.isValid(email as string)
-      if (!isValid) {
+
+      const isValidEmail = this.emailValidator.isValid(email as string)
+      if (!isValidEmail) {
         return badRequest(new InvalidParamError('email'))
       }
+
+      const isValidPhoneNumber = this.phoneNumberValidator.isValid(phoneNumber as string)
+      if (!isValidPhoneNumber) {
+        return badRequest(new InvalidParamError('phoneNumber'))
+      }
+
       return {
         statusCode: 200,
         body: { message: 'User signed' }
