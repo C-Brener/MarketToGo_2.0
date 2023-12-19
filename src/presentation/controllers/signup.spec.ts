@@ -1,6 +1,8 @@
 import { SignUpController } from './signup'
 import { MissingParamError, InvalidParamError, ServerError } from '../errors'
 import type { EmailValidator, PhoneNumberValidator } from '../protocols'
+import type { AddAccountModel, AddAccount } from '../../domain/usecases/add-account'
+import type { AccountModel } from '../../domain/models/account'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -20,21 +22,39 @@ const makePhoneNumberValidator = (): PhoneNumberValidator => {
   return new EmailValidatorStub()
 }
 
+const makeAddAccount = (): AddAccount => {
+  class AddAcountStub implements AddAccount {
+    add (account: AddAccountModel): AccountModel {
+      const fakeAccount = {
+        id: 'valid_id',
+        name: account.name,
+        email: account.email,
+        password: account.password,
+        phoneNumber: account.phoneNumber
+      }
+      return fakeAccount
+    }
+  }
+  return new AddAcountStub()
+}
+
 interface SutTypes {
   sut: SignUpController
   emailValidatorStub: EmailValidator
   phoneNumberValidatorStub: PhoneNumberValidator
+  addAccountStub: AddAccount
 }
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
   const phoneNumberValidatorStub = makePhoneNumberValidator()
-  const sut = new SignUpController(emailValidatorStub, phoneNumberValidatorStub)
-
+  const addAccountStub = makeAddAccount()
+  const sut = new SignUpController(emailValidatorStub, phoneNumberValidatorStub, addAccountStub)
   return {
     sut,
     emailValidatorStub,
-    phoneNumberValidatorStub
+    phoneNumberValidatorStub,
+    addAccountStub
   }
 }
 
@@ -233,5 +253,31 @@ describe('SignUp Controller', () => {
     // THEN
     expect(response.statusCode).toBe(500)
     expect(response.body).toEqual(new ServerError())
+  })
+
+  test('Should call AddAccount with correct values', () => {
+    // GIVEN
+    const { sut, addAccountStub } = makeSut()
+    // WHEN
+    const addSpy = jest.spyOn(addAccountStub, 'add')
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'invalid_email@gmail.com',
+        password: 'any_password',
+        confirmPassword: 'any_password',
+        phoneNumber: '719999999'
+      }
+    }
+
+    sut.handle(httpRequest)
+
+    // THEN
+    expect(addSpy).toHaveBeenCalledWith({
+      name: 'any_name',
+      email: 'invalid_email@gmail.com',
+      password: 'any_password',
+      phoneNumber: '719999999'
+    })
   })
 })
