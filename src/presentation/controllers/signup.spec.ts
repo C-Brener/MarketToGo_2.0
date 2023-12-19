@@ -13,7 +13,7 @@ const makeEmailValidator = (): EmailValidator => {
 
 const makePhoneNumberValidator = (): PhoneNumberValidator => {
   class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
+    isValid (phoneNumber: string): boolean {
       return true
     }
   }
