@@ -278,4 +278,53 @@ describe('SignUp Controller', () => {
       phoneNumber: '719999999'
     })
   })
+
+  test('Should return 500 if addAccount throws', () => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+      throw new ServerError()
+    })
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'invalid_email@gmail.com',
+        password: 'any_password',
+        confirmPassword: 'any_password',
+        phoneNumber: '719999999'
+      }
+    }
+    const response = sut.handle(httpRequest)
+
+    // THEN
+    expect(response.statusCode).toBe(500)
+    expect(response.body).toEqual(new ServerError())
+  })
+
+  test('Should return 200 if an valid data is provided', () => {
+    // GIVEN
+    const { sut } = makeSut()
+    const fakeAccount = {
+      id: 'valid_id',
+      name: 'valid_name',
+      email: 'valid_email@gmail.com',
+      password: 'valid_password',
+      phoneNumber: '719999999'
+    }
+    // WHEN
+    const httpRequest = {
+      body: {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email@gmail.com',
+        password: 'valid_password',
+        confirmPassword: 'valid_password',
+        phoneNumber: '719999999'
+      }
+    }
+    const response = sut.handle(httpRequest)
+
+    // THEN
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toEqual(fakeAccount)
+  })
 })
