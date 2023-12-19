@@ -1,8 +1,17 @@
 import { SignUpController } from './signup'
 import { MissingParamError, InvalidParamError, ServerError } from '../errors'
-import type { EmailValidator } from '../protocols'
+import type { EmailValidator, PhoneNumberValidator } from '../protocols'
 
 const makeEmailValidator = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid (email: string): boolean {
+      return true
+    }
+  }
+  return new EmailValidatorStub()
+}
+
+const makePhoneNumberValidator = (): PhoneNumberValidator => {
   class EmailValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
       return true
@@ -14,15 +23,18 @@ const makeEmailValidator = (): EmailValidator => {
 interface SutTypes {
   sut: SignUpController
   emailValidatorStub: EmailValidator
+  phoneNumberValidatorStub: PhoneNumberValidator
 }
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
-  const sut = new SignUpController(emailValidatorStub)
+  const phoneNumberValidatorStub = makePhoneNumberValidator()
+  const sut = new SignUpController(emailValidatorStub, phoneNumberValidatorStub)
 
   return {
     sut,
-    emailValidatorStub
+    emailValidatorStub,
+    phoneNumberValidatorStub
   }
 }
 
@@ -177,5 +189,26 @@ describe('SignUp Controller', () => {
     // THEN
     expect(response.statusCode).toBe(500)
     expect(response.body).toEqual(new ServerError())
+  })
+
+  test('Should return 400 if an invalid phoneNumber is provided', () => {
+    // GIVEN
+    const { sut, phoneNumberValidatorStub } = makeSut()
+    // WHEN
+    jest.spyOn(phoneNumberValidatorStub, 'isValid').mockReturnValueOnce(false)
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'invalid_email@gmail.com',
+        password: 'any_password',
+        confirmPassword: 'any_password',
+        phoneNumber: '719999999'
+      }
+    }
+    const response = sut.handle(httpRequest)
+
+    // THEN
+    expect(response.statusCode).toBe(400)
+    expect(response.body).toEqual(new InvalidParamError('phoneNumber'))
   })
 })
