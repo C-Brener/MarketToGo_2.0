@@ -211,4 +211,27 @@ describe('SignUp Controller', () => {
     expect(response.statusCode).toBe(400)
     expect(response.body).toEqual(new InvalidParamError('phoneNumber'))
   })
+
+  test('Should return 500 if phoneNumberValidator throws error', () => {
+    // GIVEN
+    const { sut, phoneNumberValidatorStub } = makeSut()
+    // WHEN
+    jest.spyOn(phoneNumberValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new ServerError()
+    })
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'invalid_email@gmail.com',
+        password: 'any_password',
+        confirmPassword: 'any_password',
+        phoneNumber: '719999999'
+      }
+    }
+    const response = sut.handle(httpRequest)
+
+    // THEN
+    expect(response.statusCode).toBe(500)
+    expect(response.body).toEqual(new ServerError())
+  })
 })
