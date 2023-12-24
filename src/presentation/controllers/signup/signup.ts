@@ -39,7 +39,7 @@ export class SignUpController implements Controller {
         return badRequest(new InvalidParamError('email'))
       }
 
-      const isValidPhoneNumber = this.phoneNumberValidator.isValid(phoneNumber as string)
+      const isValidPhoneNumber = this.phoneNumberValidator.isValid(phoneNumber as string, 'BR')
       if (!isValidPhoneNumber) {
         return badRequest(new InvalidParamError('phoneNumber'))
       }
