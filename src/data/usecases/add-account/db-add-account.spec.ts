@@ -1,9 +1,10 @@
 import { DbAddAccount } from './db-add-account'
-import type { Encrypter } from './db-add-account-protocols'
+import type { AccountModel, AddAccountModel, AddAccountRepository, Encrypter } from './db-add-account-protocols'
 
 interface SutTypes {
   sut: DbAddAccount
   encrypterStub: Encrypter
+  addAccountRepositoryStub: AddAccountRepository
 }
 
 const makeEncrypter = (): Encrypter => {
@@ -14,12 +15,28 @@ const makeEncrypter = (): Encrypter => {
   }
   return new EncrypterStub()
 }
+const makeAddAccountRepository = (): AddAccountRepository => {
+  class AddAccountRepositoryStub implements AddAccountRepository {
+    async add (accountData: AddAccountModel): Promise<AccountModel> {
+      const fakeAccount = {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email',
+        password: 'hashed_password',
+        phoneNumber: 'valid_number'
+      }
+      return new Promise(resolve => { resolve(fakeAccount) })
+    }
+  }
+  return new AddAccountRepositoryStub()
+}
 
 const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypter()
-  const sut = new DbAddAccount(encrypterStub)
+  const addAccountRepositoryStub = makeAddAccountRepository()
+  const sut = new DbAddAccount(encrypterStub, addAccountRepositoryStub)
   return {
-    sut, encrypterStub
+    sut, encrypterStub, addAccountRepositoryStub
   }
 }
 
@@ -55,5 +72,26 @@ describe('DbAddAccount UseCase', () => {
     const promiseAccount = sut.add(accountData)
 
     await expect(promiseAccount).rejects.toThrow()
+  })
+
+  test('Should call AddAccountRepository with correct data', async () => {
+    const { sut, addAccountRepositoryStub } = makeSut()
+    const addSpySpy = jest.spyOn(addAccountRepositoryStub, 'add')
+
+    const accountData = {
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password',
+      phoneNumber: 'valid_number'
+    }
+
+    await sut.add(accountData)
+
+    expect(addSpySpy).toHaveBeenCalledWith({
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'hashed_password',
+      phoneNumber: 'valid_number'
+    })
   })
 })
