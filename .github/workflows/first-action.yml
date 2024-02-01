@@ -1,0 +1,10 @@
+name: First WorkFlow # The name of the new action
+on: workflow_dispatch  #Basically, we use the on to representer when this workflow it's executed
+jobs: 
+  first-job:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Print Greeting
+        run: echo "Hello World!"
+      - name: Print goodbye
+        run: echo "Done - Goodbye!"
