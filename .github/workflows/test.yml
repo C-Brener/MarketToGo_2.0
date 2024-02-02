@@ -1,0 +1,25 @@
+name: Test Project
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the Code
+        uses: actions/checkout@4
+      - name: Install NodeJs
+        uses: actions/setup-node@v4
+        with: 
+            node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Execute Tests
+        run: npm run test
+
+
+
+
+
+# In the line 2 we have a reserved word called on, when we use on it's related to event for trigger the workflow, we have some events for trigger this.
+# In the line 8 we use other reserved word, run, with run me can made action, the action is a applicantion who have responsability of the perform frenquently task
+# Diff the command, when we use an action, we use the reserved word called "uses"
+# If you verifiy the documentation you can find other configuration for these actions https://github.com/marketplace/actions/checkout
