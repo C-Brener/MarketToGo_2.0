@@ -23,6 +23,7 @@ jobs:
       - name: Execute Tests
         run: npm run test
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get the Code
@@ -35,13 +36,3 @@ jobs:
         run: npm ci
       - name: Build Project
         run: echo "Building the project in second Job"
-
-
-
-
-
-
-# In the line 2 we have a reserved word called on, when we use on it's related to event for trigger the workflow, we have some events for trigger this.
-# In the line 8 we use other reserved word, run, with run me can made action, the action is a applicantion who have responsability of the perform frenquently task
-# Diff the command, when we use an action, we use the reserved word called "uses"
-# If you verifiy the documentation you can find other configuration for these actions https://github.com/marketplace/actions/checkout
