@@ -2,4 +2,5 @@
 # In the line 8 we use other reserved word, run, with run me can made action, the action is a applicantion who have responsability of the perform frenquently task
 # Diff the command, when we use an action, we use the reserved word called "uses"
 # If you verify the documentation you can find other configuration for these actions https://github.com/marketplace/actions/checkout
-# if we need the jobs running in parallel we doesn't need put anything in the code, but, if we need the pipeline running one job each other we need use the "needs" reserved word to made this. If the dependencie one job faield all the workflow stoped
+# if we need the jobs running in parallel we doesn't need put anything in the code, but, if we need the pipeline running one job each other we need use the "needs" reserved word to made this. If the dependencie one job faield all the workflow stoped.
+# Inside the Pipeline context we have a property called trigger this is extremally necessary because woth the trigger we can choice how the pipeline will be executed. You can add several triggers in a single workflow
