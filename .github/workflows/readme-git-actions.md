@@ -4,3 +4,4 @@
 # If you verify the documentation you can find other configuration for these actions https://github.com/marketplace/actions/checkout
 # if we need the jobs running in parallel we doesn't need put anything in the code, but, if we need the pipeline running one job each other we need use the "needs" reserved word to made this. If the dependencie one job faield all the workflow stoped.
 # Inside the Pipeline context we have a property called trigger this is extremally necessary because woth the trigger we can choice how the pipeline will be executed. You can add several triggers in a single workflow
+# Github Context -> Inside the github we can access some informations about our PR, our REF, our Commits using the githubContext, this is away to access some informations and using these infromations in our steps our other jobs, you can see an example about Expressions in output.yml and test_coverage.yml; (https://docs.github.com/en/actions/learn-github-actions/contexts)
