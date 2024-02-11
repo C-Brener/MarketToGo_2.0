@@ -1,7 +1,20 @@
-# In the line 2 we have a reserved word called on, when we use on it's related to event for trigger the workflow, we have some events for trigger this.
-# In the line 8 we use other reserved word, run, with run me can made action, the action is a applicantion who have responsability of the perform frenquently task
-# Diff the command, when we use an action, we use the reserved word called "uses"
-# If you verify the documentation you can find other configuration for these actions https://github.com/marketplace/actions/checkout
-# if we need the jobs running in parallel we doesn't need put anything in the code, but, if we need the pipeline running one job each other we need use the "needs" reserved word to made this. If the dependencie one job faield all the workflow stoped.
-# Inside the Pipeline context we have a property called trigger this is extremally necessary because woth the trigger we can choice how the pipeline will be executed. You can add several triggers in a single workflow
-# Github Context -> Inside the github we can access some informations about our PR, our REF, our Commits using the githubContext, this is away to access some informations and using these infromations in our steps our other jobs, you can see an example about Expressions in output.yml and test_coverage.yml; (https://docs.github.com/en/actions/learn-github-actions/contexts)
+# GitHub Actions Workflow Configuration Guide
+
+## Event Triggers
+In line 2, the keyword "on" signifies an event trigger for initiating the workflow. Events can include various actions to trigger the workflow.
+
+## Action Execution
+Line 8 employs the reserved word "run" to execute actions. Actions represent applications responsible for performing recurring tasks. When defining actions, the keyword "uses" is utilized.
+
+For more configuration options regarding actions, refer to the [GitHub Actions documentation](https://github.com/marketplace/actions/checkout).
+
+## Job Execution Control
+If parallel job execution is required, no additional code is necessary. However, for sequential pipeline execution, the "needs" keyword is utilized to establish dependencies between jobs. If a job fails, the entire workflow is halted.
+
+## Pipeline Context
+Within the Pipeline context, the "trigger" property plays a crucial role. It allows the user to determine the execution behavior of the pipeline. Multiple triggers can be added to a single workflow.
+
+## GitHub Context
+The GitHub context provides access to essential information within GitHub repositories, including PR details, references, and commits. Utilizing the GitHub context, users can incorporate relevant information into their workflow steps or other jobs. Refer to the example expressions in `output.yml` and `test_coverage.yml` for more details.
+
+Learn more about GitHub Actions contexts and expressions in the [GitHub Actions documentation](https://docs.github.com/en/actions/learn-github-actions/contexts).
