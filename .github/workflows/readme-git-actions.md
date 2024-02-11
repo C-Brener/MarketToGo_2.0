@@ -34,5 +34,5 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 
 ## pull_request 
 * Within the events, we have Activity Types, which will be triggered when we have a specific activity.
-* If we need an example, you can access in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/1/commits/2a0e4fde638942d91af358ef57c1aed4b350c87f)
+* If we need an example, you can access in this [commit](https://github.com/C-Brener/MarketToGo_2.0/commit/6d9dc9930d545045536305b355f9378487764e19)
 
