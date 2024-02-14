@@ -1,8 +1,24 @@
 name: PR Validation
+
 on:
   pull_request:
-    types: [opened, edited]
+    types: opened
+    branches:
+      - 'feat/**' # feat/new or feat/new/feature
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/*'
+  push:
+    branches:
+      - master
+      - 'feat/**' # feat/new or feat/new/feature
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/*'
   
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
