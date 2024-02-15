@@ -39,3 +39,4 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
     * If you have a collaborators in your project, they people can be open a PR and runs the actions
 
 ## Cancelling and Skipping Workflows
+* If you need a specifically commit don't trigger the wotkflow you can use reserved word for skip it, you need put this reserved word in your commit, "[skip ci]", with this, you can block the action runs on this commit. Exist other reserved word for do the same thing. Verify in this [link](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs).
