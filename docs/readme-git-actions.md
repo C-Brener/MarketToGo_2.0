@@ -35,4 +35,5 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 ## pull_request 
 * Within the events, we have Activity Types, which will be triggered when we have a specific activity.
 * If we need an example, you can access in this [commit](https://github.com/C-Brener/MarketToGo_2.0/commit/6d9dc9930d545045536305b355f9378487764e19).
-
+* By default, pull request based on fork doesn't trigger the pipelines, and this occurs beacause everyone can be create a fork of your repository and create an pull request, so, if you don't have this rules, everyone can be trigger your actions.
+    * If you have a collaborators in your project, they people can be open a PR and runs the actions
