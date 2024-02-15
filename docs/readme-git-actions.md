@@ -34,5 +34,9 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 
 ## pull_request 
 * Within the events, we have Activity Types, which will be triggered when we have a specific activity.
-* If we need an example, you can access in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/1/commits/2a0e4fde638942d91af358ef57c1aed4b350c87f)
+* If we need an example, you can access in this [commit](https://github.com/C-Brener/MarketToGo_2.0/commit/6d9dc9930d545045536305b355f9378487764e19).
+* By default, pull request based on fork doesn't trigger the pipelines, and this occurs beacause everyone can be create a fork of your repository and create an pull request, so, if you don't have this rules, everyone can be trigger your actions.
+    * If you have a collaborators in your project, they people can be open a PR and runs the actions
 
+## Cancelling and Skipping Workflows
+* If you need a specifically commit don't trigger the wotkflow you can use reserved word for skip it, you need put this reserved word in your commit, "[skip ci]", with this, you can block the action runs on this commit. Exist other reserved word for do the same thing. Verify in this [link](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs).
