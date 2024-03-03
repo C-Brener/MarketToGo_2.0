@@ -30,13 +30,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Get the Code
-        uses: actions/checkout@v4
-      - name: Install NodeJs
-        uses: actions/setup-node@v4
+      - name: Get build artifacts
+        uses: actions/downlod-artifact@c4
         with: 
-            node-version: 20
-      - name: Install dependencies
-        run: npm ci
-      - name: Build Project
-        run: echo "Building the project in second Job"
+          name: coverage
+          path: docs
