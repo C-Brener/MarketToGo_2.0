@@ -33,5 +33,5 @@ jobs:
       - name: Get build artifacts
         uses: actions/download-artifact@v4
         with: 
-          name: coverage
+          name: coverage-files
           path: docs
