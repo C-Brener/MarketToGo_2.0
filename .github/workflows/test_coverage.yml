@@ -25,7 +25,7 @@ jobs:
         with:
           name: coverage-files
           path: |
-            coverage
+            coverage/lcov-report
   deploy:
     needs: test
     runs-on: ubuntu-latest
