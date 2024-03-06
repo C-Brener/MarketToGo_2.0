@@ -47,3 +47,10 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 * The central idea of the Job Artifact is to save and share data between jobs in a workflow, basically with an artifact you can reuse the result of one job in another.
 * With an artifact it's possible generate a build of an app, an website files.
 * With artifact, you can use as manually way, doing the dowload of an app, or automatically publish the result in AppCenter or doing the deploy.
+
+## Upload Artifact
+* This is an action in which you can take a specific file or folder and compress it in order to reuse it at another time. The idea is to reuse it to spend less time on other work.
+* When you use it, you need to configure some property:
+     * path: What is the path you want to upload through.
+     * rentation-day: By default all the artifacts are retained for 90 days, but you can change it and set other period.
+     * Overwrite: With this property, you can overwrite the oldest value that has the same name as the current value.
