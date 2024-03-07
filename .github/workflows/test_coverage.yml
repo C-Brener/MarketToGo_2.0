@@ -1,6 +1,6 @@
 name: Test Project
 on: 
-  push
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,29 +32,21 @@ jobs:
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
+        with:
+          ref: my-branch
       - name: Get build artifacts
         uses: actions/download-artifact@v4
         with: 
           name: coverage-files
           path: docs
-      # - name: Configure Git
-      #   run: |
-      #     git config --global user.email "${{ secrets.GIT_EMAIL }}"
-      #     git config --global user.name "${{ secrets.GIT_USERNAME }}"
-      # - name: Push to GitHub Pages Branch
-      #   run: |
-      #     git checkout -b gh-pages
-      #     git pull
-      #     git add .
-      #     git commit -m "Update coverage files"
-      #     git push origin gh-pages
-      #     name: Wait for Deploy
-      - name: Wait for Render Deployment
-        uses: bounceapp/render-action@0.6.0
-        with:
-          render-token: ${{ secrets.RENDER_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          service-id: srv-xxxxxxxxxxxxxxxxxxxx
-          retries: 5
-          wait: 16000
-          sleep: 30000
+      - name: Configure Git
+        run: |
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USERNAME }}"
+      - name: Push to GitHub Pages Branch
+        run: |
+          git checkout -b gh-pages
+          git pull origin gh-pages
+          git add .
+          git commit -m "Update coverage files"
+          git push origin gh-pages

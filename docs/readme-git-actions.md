@@ -54,3 +54,6 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
      * path: What is the path you want to upload through.
      * rentation-day: By default all the artifacts are retained for 90 days, but you can change it and set other period.
      * Overwrite: With this property, you can overwrite the oldest value that has the same name as the current value.
+
+## Download Artifact 
+
