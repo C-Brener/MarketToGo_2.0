@@ -32,8 +32,6 @@ jobs:
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
-        with:
-          ref: my-branch
       - name: Get build artifacts
         uses: actions/download-artifact@v4
         with: 
