@@ -41,6 +41,9 @@ jobs:
         run: |
           git config --global user.email "${{ secrets.GIT_EMAIL }}"
           git config --global user.name "${{ secrets.GIT_USERNAME }}"
+      - name: Set Git configuration
+        run: |
+          git config pull.rebase false
       - name: Push to GitHub Pages Branch
         run: |
           git checkout -b gh-pages
