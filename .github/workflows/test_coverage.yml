@@ -47,7 +47,7 @@ jobs:
       - name: Push to GitHub Pages Branch
         run: |
           git checkout -b gh-pages
-          git pull origin gh-pages
+          git pull --allow-unrelated-histories origin gh-pages
           git add .
           git commit -m "Update coverage files"
           git push origin gh-pages
