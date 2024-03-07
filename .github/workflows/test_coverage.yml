@@ -47,3 +47,13 @@ jobs:
           git add .
           git commit -m "Update coverage files"
           git push origin gh-pages
+          name: Wait for Deploy
+      - name: Wait for Render Deployment
+        uses: bounceapp/render-action@0.6.0
+        with:
+          render-token: ${{ secrets.RENDER_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          service-id: srv-xxxxxxxxxxxxxxxxxxxx
+          retries: 5
+          wait: 16000
+          sleep: 30000
