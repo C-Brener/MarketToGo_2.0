@@ -54,6 +54,8 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
      * path: What is the path you want to upload through.
      * rentation-day: By default all the artifacts are retained for 90 days, but you can change it and set other period.
      * Overwrite: With this property, you can overwrite the oldest value that has the same name as the current value.
+* You can see this repo using the upload action in this [commit](https://github.com/C-Brener/MarketToGo_2.0/commit/d3fd4ec67c96bfd980aec0af1551cf5dc2344c02)
 
 ## Download Artifact 
-
+* This is an action related to "Upload Artifact" because, in order to download, we first need to upload.
+* Basically 
