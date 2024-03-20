@@ -9,6 +9,8 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
+    outputs: 
+      script-file: ${{ steps.publish.outputs.outputValue }}
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
@@ -21,7 +23,8 @@ jobs:
       - name: Execute Tests
         run: npm run test
       - name: Publish Coverage File Name
-        run: find coverage/lcov-report/*.html -type f -execdir echo '{}' ';'
+        id: publish
+        run: find coverage/lcov-report/*.html -type f -execdir echo 'outputValue={}' >> $GITHUB_OUTPUT';'
         if:
           failure()
       - name: Upload Artifact
