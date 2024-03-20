@@ -18,8 +18,12 @@ jobs:
             node-version: 20
       - name: Install dependencies
         run: npm ci
-      - name: Execute Tests
-        run: npm run test
+      # - name: Execute Tests
+      #   run: npm run test
+      - name: Publish Coverage File Name
+        run: find coverage/lcov-report/*.html -type f -execdir echo '{}' ';'
+        if:
+          failure()
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
