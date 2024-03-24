@@ -25,8 +25,6 @@ jobs:
       - name: Publish Coverage File Name
         id: publish
         run: find coverage/lcov-report/*.html -type f -execdir echo 'outputValue={}' >> $GITHUB_OUTPUT';'
-        if:
-          failure()
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -39,6 +37,8 @@ jobs:
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
+      - name: Output filename
+        run: echo "${{needs.test.outputs.script-file}}"
       - name: Get build artifacts
         uses: actions/download-artifact@v4
         with: 
