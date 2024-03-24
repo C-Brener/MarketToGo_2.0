@@ -1,7 +1,7 @@
 {
   "name": "markettogo_2.0",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJS Rest API por MarketToGo",
   "main": "index.js",
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
