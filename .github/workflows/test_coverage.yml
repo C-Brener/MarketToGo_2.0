@@ -9,6 +9,8 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
+    outputs: 
+      script-file: ${{ steps.publish.outputs.outputValue }}
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
@@ -20,17 +22,25 @@ jobs:
         run: npm ci
       - name: Execute Tests
         run: npm run test
+      - name: Publish Coverage File Name
+        id: publish
+        run:  echo "outputValue=$(find coverage/lcov-report/*.html)" >> $GITHUB_OUTPUT
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-files
+          path: |
+            coverage/lcov-report
   deploy:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
-      - name: Install NodeJs
-        uses: actions/setup-node@v4
+      - name: Output filename
+        run: echo "${{needs.test.outputs.script-file}}"
+      - name: Get build artifacts
+        uses: actions/download-artifact@v4
         with: 
-            node-version: 20
-      - name: Install dependencies
-        run: npm ci
-      - name: Build Project
-        run: echo "Building the project in second Job"
+          name: coverage-files
+          path: docs/coverage
