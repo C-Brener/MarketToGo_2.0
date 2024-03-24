@@ -41,7 +41,7 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 ## Cancelling and Skipping Workflows
 * If you need a specifically commit don't trigger the wotkflow you can use reserved word for skip it, you need put this reserved word in your commit, "[skip ci]", with this, you can block the action runs on this commit. Exist other reserved word for do the same thing. Verify in this [link](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs).
 
-# Github Jobs Artifacts
+# Github Jobs Artifacts & Outputs
 
 ## Deep Dive 
 * The central idea of the Job Artifact is to save and share data between jobs in a workflow, basically with an artifact you can reuse the result of one job in another.
@@ -59,3 +59,6 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 ## Download Artifact 
 * This is an action related to "Upload Artifact" because, in order to download, we first need to upload.
 * Basically 
+
+## Outputs
+* We learned in artifacs that it is possible to upload files, folders and others into our workflow, but for simple values, instead of using artifacts, we can use outputs to save these values. 
