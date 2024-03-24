@@ -24,7 +24,8 @@ jobs:
         run: npm run test
       - name: Publish Coverage File Name
         id: publish
-        run: find coverage/lcov-report/*.html -type f -execdir echo 'outputValue={}'
+        run: |
+           find coverage/lcov-report/*.html -type f -execdir echo 'outputValue={}' >> $GITHUB_OUTPUT';'
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
