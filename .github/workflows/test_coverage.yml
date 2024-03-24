@@ -25,7 +25,7 @@ jobs:
       - name: Publish Coverage File Name
         id: publish
         run: |
-           find coverage/lcov-report/*.html -type f -execdir echo 'outputValue={}' >> $GITHUB_OUTPUT';'
+           find coverage/lcov-report/*.html >> $GITHUB_OUTPUT
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
