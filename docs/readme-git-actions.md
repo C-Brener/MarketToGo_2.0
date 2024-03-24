@@ -61,4 +61,4 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 * Basically 
 
 ## Outputs
-* We learned in artifacs that it is possible to upload files, folders and others into our workflow, but for simple values, instead of using artifacts, we can use outputs to save these values. 
+* We learned in artifacs that it is possible to upload files, folders and others into our workflow, but for simple values, instead of using artifacts, we can use outputs to save these values. 1
