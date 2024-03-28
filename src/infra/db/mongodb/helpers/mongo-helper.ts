@@ -9,7 +9,6 @@ export const MongoHelper = {
   },
 
   getCollection (name: string): Collection {
-    console.log(`Testando ${global.__MONGO_URI__ as string}`)
     return this.client.db().collection(name)
   },
 
