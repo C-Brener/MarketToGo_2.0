@@ -6,6 +6,7 @@ on:
       - 'feat/**' # feat/new or feat/new/feature
     paths-ignore:
       - 'docs/**'
+      - '.github/workflows/*'
   push:
     branches:
       - master
