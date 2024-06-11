@@ -99,6 +99,7 @@ describe('SignUp Controller', () => {
     }
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
+    expect(response.body).toEqual(new MissingParamError('phoneNumber'))
   })
 
   test('Should return 400 if no password is provided', async () => {
