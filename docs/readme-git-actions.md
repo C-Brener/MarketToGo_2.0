@@ -62,3 +62,9 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 
 ## Outputs
 * We learned in artifacs that it is possible to upload files, folders and others into our workflow, but for simple values, instead of using artifacts, we can use outputs to save these values. 
+
+## Cache Dependencies
+* Basically, it's possible to create a cache for our dependencies, and these caches can help us perform other actions more quickly. 
+* Every time we create a step, we have to install the dependencies and, if we create a cache of dependencies, we won't spend tan.
+* The cache will be invalidated if we change any dependencies.
+* You can see a simple structure of caching in this [commit](https://github.com/C-Brener/MarketToGo_2.0/commit/ee4317496564c0f7c10ff95683f89624a46639b6)
