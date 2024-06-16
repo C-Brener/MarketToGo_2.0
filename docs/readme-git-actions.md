@@ -78,4 +78,4 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
     ```
 * Another important use of secret variables is to save important keys for other services.
 * You can create multiples environment in your repository and create yours secrets variables too.
-* Inside the environments page you can out many setting to trigger your workflow or an action.
+* Inside the environments page you can out many setting to trigger your workflow or an action. [link](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
