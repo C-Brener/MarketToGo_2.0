@@ -68,3 +68,14 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 * Every time we create a step, we have to install the dependencies and, if we create a cache of dependencies, we won't spend tan.
 * The cache will be invalidated if we change any dependencies.
 * You can see a simple structure of caching in this [commit](https://github.com/C-Brener/MarketToGo_2.0/commit/ee4317496564c0f7c10ff95683f89624a46639b6)
+
+## Secrets Variables
+*  This is an important topic inside the action context, because when we use secrets to storage our key access or/and important informations.
+* You can see how create secrets for a repository here: [docs](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository)
+*  In the code below, you can see how to access your secrets inside the rrepository:
+    ```
+        ${{secrets.VARIABLE_CREATE_AS_SECRET_IN_THE_REPO}}
+    ```
+* Another important use of secret variables is to save important keys for other services.
+* You can create multiples environment in your repository and create yours secrets variables too.
+* Inside the environments page you can out many setting to trigger your workflow or an action. [link](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
