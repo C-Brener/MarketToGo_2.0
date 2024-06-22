@@ -84,8 +84,11 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 ### Conditions
 * Inside the Git actions we have a conditionals as in any programming language
 * For use the conditions in gitAcions we need follow this structure:
-    ```
+
+    ```yml
         if: failure() && steps.run-tests.outcome != 'success'
-        // failure() is an especial conditions where executed when we have an failure in previous step
+        # failure() is an especial conditions where executed when we have an failure in previous step
 
     ```
+### Special Conditional Functions
+* Special conditional is used to trigger conditionals
