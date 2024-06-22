@@ -1,6 +1,7 @@
 name: PR Validation
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - 'feat/**' # feat/new or feat/new/feature
@@ -40,7 +41,7 @@ jobs:
         id: run-tests
         run: npm run test:verbose
       - name: Upload test report
-        if: ${{ steps.run-tests.outcome != 'success' }}
+        if: ${{ steps.run-tests.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
           name: coverage
