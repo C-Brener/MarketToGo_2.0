@@ -1,7 +1,20 @@
 name: Test Project
-on: 
+on:
   workflow_dispatch:
-
+  pull_request:
+    branches:
+      - 'feat/**' # feat/new or feat/new/feature
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/*'
+  push:
+    branches:
+      - master
+      - 'feat/**' # feat/new or feat/new/feature
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/*'
+  
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -9,8 +22,6 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
-    outputs: 
-      script-file: ${{ steps.publish.outputs.outputValue }}
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
@@ -18,29 +29,38 @@ jobs:
         uses: actions/setup-node@v4
         with: 
             node-version: 20
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Execute Tests
-        run: npm run test
-      - name: Publish Coverage File Name
-        id: publish
-        run:  echo "outputValue=$(find coverage/lcov-report/*.html)" >> $GITHUB_OUTPUT
-      - name: Upload Artifact
+        id: run-tests
+        run: npm run test:verbose
+      - name: Upload test report
+        if: ${{ steps.run-tests.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-files
-          path: |
-            coverage/lcov-report
+          name: coverage
+          path: coverage/lcov-report
   deploy:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
-      - name: Output filename
-        run: echo "${{needs.test.outputs.script-file}}"
-      - name: Get build artifacts
-        uses: actions/download-artifact@v4
+      - name: Install NodeJs
+        uses: actions/setup-node@v4
         with: 
-          name: coverage-files
-          path: docs/coverage
+            node-version: 20
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Project
+        run: echo "Building the project in second Job"
