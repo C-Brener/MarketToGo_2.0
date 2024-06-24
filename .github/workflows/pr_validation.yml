@@ -65,3 +65,10 @@ jobs:
         run: npm ci
       - name: Build Project
         run: echo "Building the project in second Job"
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Information
+        run: | 
+          echo "Someting went wrong"
+          echo "${{ github }}"
