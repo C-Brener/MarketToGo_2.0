@@ -66,6 +66,7 @@ jobs:
       - name: Build Project
         run: echo "Building the project in second Job"
   report:
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Output Information
