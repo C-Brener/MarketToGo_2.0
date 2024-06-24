@@ -31,6 +31,7 @@ jobs:
         with: 
             node-version: 20
       - name: Cache dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: node_modules
@@ -58,6 +59,7 @@ jobs:
         with: 
             node-version: 20
       - name: Cache dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: ~/.npm
