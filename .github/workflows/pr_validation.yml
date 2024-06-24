@@ -1,6 +1,7 @@
 name: PR Validation
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - 'feat/**' # feat/new or feat/new/feature
@@ -37,7 +38,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Execute Tests
-        run: npm run test
+        id: run-tests
+        run: npm run test:verbose
+      - name: Upload test report
+        if: failure() && steps.run-tests.outcome != 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/lcov-report
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -57,3 +65,12 @@ jobs:
         run: npm ci
       - name: Build Project
         run: echo "Building the project in second Job"
+  report:
+    needs: [test, deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Information
+        run: | 
+          echo "Someting went wrong"
+          echo "${{ github }}"

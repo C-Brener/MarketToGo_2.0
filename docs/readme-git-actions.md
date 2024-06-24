@@ -79,3 +79,21 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 * Another important use of secret variables is to save important keys for other services.
 * You can create multiples environment in your repository and create yours secrets variables too.
 * Inside the environments page you can out many setting to trigger your workflow or an action. [link](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
+
+## Controlling Workflow & Job Execution
+### Conditions
+* Inside the Git actions we have a conditionals as in any programming language
+* For use the conditions in gitAcions we need follow this structure:
+
+    ```yml
+        if: failure() && steps.run-tests.outcome != 'success'
+        # failure() is an especial conditions where executed when we have an failure in previous step
+
+    ```
+### Special Conditional Functions
+* Special conditional is used to trigger conditional created inside the a workflow:
+    * failure() -> Returns true when any previous Step or Job failed.
+    * success() -> Returns true when none of the prevcious steps have failed.
+    * always() -> Causes the setp to always execute, even when cancelled.
+    * cancelled() -> Returns true if the workflow has been cancelled.
+* The special conditional is necessary every time we need trigger a conditional created by us. 
