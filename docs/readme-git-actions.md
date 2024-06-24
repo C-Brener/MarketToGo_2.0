@@ -93,7 +93,7 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 ### Special Conditional Functions
 * Special conditional is used to trigger conditional created inside the a workflow:
     * failure() -> Returns true when any previous Step or Job failed.
-    * success() -> Returns true when none of the prevcious steps have failed.
+    * success() -> Returns true when none of the previous steps have failed.
     * always() -> Causes the setp to always execute, even when cancelled.
     * cancelled() -> Returns true if the workflow has been cancelled.
 * The special conditional is necessary every time we need trigger a conditional created by us. 
