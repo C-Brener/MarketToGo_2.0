@@ -6,6 +6,12 @@ jobs:
       matrix:
         node-version: [16, 17, 20]
         operating-system: [ubuntu-latest, windows-latest]
+        include:
+          - node-version: 18
+            operating-system: ubuntu-latest
+        exclude:
+         - node-version: 16
+           operating-system: ubuntu-latest
     runs-on: ${{matrix.operating-system}}
     steps:
       - name: Get code
@@ -17,5 +23,5 @@ jobs:
       - name: Install Dependencies
         run: npm ci
       - name: Build project
-        run: | 
+        run: |
           echo "Building"
