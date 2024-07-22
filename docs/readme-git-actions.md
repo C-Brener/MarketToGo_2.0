@@ -97,3 +97,5 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
     * always() -> Causes the setp to always execute, even when cancelled.
     * cancelled() -> Returns true if the workflow has been cancelled.
 * The special conditional is necessary every time we need trigger a conditional created by us. 
+* Cache-Hit -> A boolean to indicate that an exact match was found for the key, which can help us create cache dependencies more easily, as you can see in this [commit](https://github.com/C-Brener/MarketToGo_2.0/commit/e630587b5060b5e24510936c26085be99bda6327)
+* continue-on-error -> This can be used when you need your pipeline to be approved even if there is an error, because this validation don't broken the jobe, but, send to you a message of error. But, if you check the context throught the steps.<step_id>.conclusion you will receive an success indepedns the job failure or not, however, if you check steps.<step_id>.outcome you will got a failure if the job failure
