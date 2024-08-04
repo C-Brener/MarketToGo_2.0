@@ -116,3 +116,13 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 * In the code above, the node JS versioning strategy has been defined and if you use differents versions to run in your pipeline, the matrix is a good option to do this.
 * include -> Is an optional parameter, but if you use this, you can define more one strategy without put more one variable.
 * exclude -> Other optional parameter, where you can remove an strategy if necessary, because, when you define an strategy like  node-version and SO, the pipeline will be create an execution to each node version combined SO.
+
+### Reusable workflow
+* If all your workflows have the same step, this can probably be turned into a specific action, as this approach will reduce repeated code.
+* So, git actions, or CI/CD in general have the power to create yours private actions, and this approach called reusable.
+* To change an actions in reusable in your trigger is needed add a specifically trigger.
+    ```yml 
+        on: 
+        workflow_call:
+    ```
+* When you use this trigger, your action can be used as reusable. In this repository, we have an example of reusable actions, you can check it in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/10/commits/aa437019f44319195d1f759638291cd82d3132c3)

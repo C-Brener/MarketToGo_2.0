@@ -1,36 +1,44 @@
 name: Test Project
-on: 
+on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      input-name:
+        description: Used to check if can be possible passed property throught actions
+        required: false
+        type: string
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    outputs: 
+    outputs:
       script-file: ${{ steps.publish.outputs.outputValue }}
     steps:
       - name: Get the Code
         uses: actions/checkout@v4
       - name: Install NodeJs
         uses: actions/setup-node@v4
-        with: 
-            node-version: 20
+        with:
+          node-version: 20
       - name: Cache dependencies
         id: cache
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}    
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-  
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm ci
       - name: Execute Tests
         id: run-tests
         run: npm run test
+      - name: Execute Tests
+        run: |
+          echo "Testing ${{inputs.input-name}}"
       - name: Publish Coverage File Name
         id: publish
-        run:  echo "outputValue=$(find coverage/lcov-report/*.html)" >> $GITHUB_OUTPUT
+        run: echo "outputValue=$(find coverage/lcov-report/*.html)" >> $GITHUB_OUTPUT
       - name: Upload test report
         if: failure() && steps.run-tests.outcome != 'success'
         uses: actions/upload-artifact@v4
