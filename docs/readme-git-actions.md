@@ -126,3 +126,5 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
         workflow_call:
     ```
 * When you use this trigger, your action can be used as reusable. In this repository, we have an example of reusable actions, you can check it in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/10/commits/aa437019f44319195d1f759638291cd82d3132c3)
+* If you need to pass some property between the workflow and the action, you can use the input strategy to do this, as you can see in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/10/commits/c1ac8edf6e66eb22a56f4db79410bf7964840dbc), specifically in test_coverage.yml file.
+* But, if you need pass secrects, git actions has other strategy to provide this, can you see this strategy in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/10/commits/98e7511ffa25a0bce0ef8edee10dde4a8bf2df1b)

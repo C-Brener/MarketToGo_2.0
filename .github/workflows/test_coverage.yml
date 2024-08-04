@@ -7,10 +7,6 @@ on:
         description: Used to check if can be possible passed property throught actions
         required: false
         type: string
-    secrets:
-      key-secret:
-        description: Secret provided by other workflow
-        required: true
 jobs:
   test:
     runs-on: ubuntu-latest

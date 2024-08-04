@@ -1,5 +1,10 @@
 name: Matrix Demo
-on: push
+on: 
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - '.github/workflows/*'
+
 jobs:
   build:
     strategy:
