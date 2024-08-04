@@ -24,7 +24,9 @@ jobs:
   test:
     uses: ./.github/workflows/test_coverage.yml
     with: 
-      input-name: input test caique 
+      input-name: input test caique
+    secrets:
+      key-secret: ${{secrets.GITHUB_TOKEN}}
   deploy:
     needs: test
     runs-on: ubuntu-latest
