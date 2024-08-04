@@ -33,7 +33,7 @@ jobs:
       - name: Execute Tests
         id: run-tests
         run: npm run test
-      - name: Execute Tests
+      - name: Inputs Testing
         run: |
           echo "Testing ${{inputs.input-name}}"
       - name: Publish Coverage File Name
