@@ -69,7 +69,7 @@ describe('SignUp Controller', () => {
     }
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new MissingParamError('name'))
+    expect(response.body).toEqual(new MissingParamError('name').message)
   })
 
   test('Should return 400 if no email is provided', async () => {
@@ -84,7 +84,7 @@ describe('SignUp Controller', () => {
     }
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new MissingParamError('email'))
+    expect(response.body).toEqual(new MissingParamError('email').message)
   })
 
   test('Should return 400 if no phoneNumber is provided', async () => {
@@ -99,7 +99,7 @@ describe('SignUp Controller', () => {
     }
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new MissingParamError('phoneNumber'))
+    expect(response.body).toEqual(new MissingParamError('phoneNumber').message)
   })
 
   test('Should return 400 if no password is provided', async () => {
@@ -114,7 +114,7 @@ describe('SignUp Controller', () => {
     }
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new MissingParamError('password'))
+    expect(response.body).toEqual(new MissingParamError('password').message)
   })
 
   test('Should return 400 if no confirmation password is provided', async () => {
@@ -129,7 +129,7 @@ describe('SignUp Controller', () => {
     }
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new MissingParamError('confirmPassword'))
+    expect(response.body).toEqual(new MissingParamError('confirmPassword').message)
   })
 
   test('Should return 400 if if passwordConfirmation failed', async () => {
@@ -145,7 +145,7 @@ describe('SignUp Controller', () => {
     }
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new InvalidParamError('confirmPassword'))
+    expect(response.body).toEqual(new InvalidParamError('confirmPassword').message)
   })
 
   test('Should return 400 if an invalid email is provided', async () => {
@@ -166,7 +166,7 @@ describe('SignUp Controller', () => {
 
     // THEN
     expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new InvalidParamError('email'))
+    expect(response.body).toEqual(new InvalidParamError('email').message)
   })
 
   test('Should call emailValidator with correct email', async () => {
@@ -228,7 +228,7 @@ describe('SignUp Controller', () => {
 
     // THEN
     expect(response.statusCode).toBe(400)
-    expect(response.body).toEqual(new InvalidParamError('phoneNumber'))
+    expect(response.body).toEqual(new InvalidParamError('phoneNumber').message)
   })
 
   test('Should return 500 if phoneNumberValidator throws error', async () => {
