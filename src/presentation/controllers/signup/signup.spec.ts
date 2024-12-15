@@ -1,6 +1,6 @@
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { SignUpController } from './signup'
-import type { AccountModel, AddAccount, AddAccountModel, EmailValidator, PhoneNumberValidator } from './signup-protocols'
+import type { AccountModel, AddAccount, AddAccountModel, EmailValidator, FetchEmailRegister, PhoneNumberValidator } from './signup-protocols'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -36,10 +36,21 @@ const makeAddAccount = (): AddAccount => {
   return new AddAcountStub()
 }
 
+const makeCheckEmailRegister = (): FetchEmailRegister => {
+  class FetchEmailRegisterStub implements FetchEmailRegister {
+    async checkEmailAlreadyExist (email: string): Promise<boolean> {
+      const checkEmail = email === 'teste@teste.com'
+      return new Promise(resolve => { resolve(checkEmail) })
+    }
+  }
+  return new FetchEmailRegisterStub()
+}
+
 interface SutTypes {
   sut: SignUpController
   emailValidatorStub: EmailValidator
   phoneNumberValidatorStub: PhoneNumberValidator
+  checkEmailRegisterStub: FetchEmailRegister
   addAccountStub: AddAccount
 }
 
@@ -47,11 +58,13 @@ const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
   const phoneNumberValidatorStub = makePhoneNumberValidator()
   const addAccountStub = makeAddAccount()
-  const sut = new SignUpController(emailValidatorStub, phoneNumberValidatorStub, addAccountStub)
+  const checkEmailRegisterStub = makeCheckEmailRegister()
+  const sut = new SignUpController(emailValidatorStub, phoneNumberValidatorStub, checkEmailRegisterStub, addAccountStub)
   return {
     sut,
     emailValidatorStub,
     phoneNumberValidatorStub,
+    checkEmailRegisterStub,
     addAccountStub
   }
 }
