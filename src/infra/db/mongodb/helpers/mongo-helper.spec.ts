@@ -8,7 +8,13 @@ describe('MongoHelper', () => {
     await sut.disconnect()
   })
   test('Should reconnect if mondb is', async () => {
-    const accountCollection = sut.getCollection('accounts')
+    let accountCollection = await sut.getCollection('accounts')
+
+    expect(accountCollection).toBeTruthy()
+
+    await sut.disconnect()
+    accountCollection = await sut.getCollection('accounts')
+
     expect(accountCollection).toBeTruthy()
   })
 })
