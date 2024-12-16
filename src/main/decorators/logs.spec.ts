@@ -6,16 +6,17 @@ interface SutTypes {
   controllerStub: Controller
 }
 
+const httpResponseStub: HttpResponse = {
+  statusCode: 200,
+  body: {
+    name: 'Caique'
+  }
+}
+
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-      const httpResponse: HttpResponse = {
-        statusCode: 200,
-        body: {
-          name: 'Caique'
-        }
-      }
-      return new Promise(resolve => resolve(httpResponse))
+      return new Promise(resolve => resolve(httpResponseStub))
     }
   }
   return new ControllerStub()
@@ -44,5 +45,19 @@ describe('LogControllerDecorator', () => {
     const handleSpy = jest.spyOn(controllerStub, 'handle')
     await sut.handle(httpRequest)
     expect(handleSpy).toHaveBeenCalledWith(httpRequest)
+  })
+
+  test('Should return the same result of the controller', async () => {
+    const httpRequest = {
+      body: {
+        email: 'any@gmail.com',
+        password: 'any_password',
+        confirmPassword: 'any_confirm_password',
+        phoneNumber: '719999999'
+      }
+    }
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(httpResponseStub)
   })
 })
