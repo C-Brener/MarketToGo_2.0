@@ -6,7 +6,8 @@ import { BcryptAdapter } from '../../infra/criptography/bcrypt-adapter'
 import { AccountMongoRepository } from '../../infra/db/mongodb/account-repository/account'
 import { FetchEmailRegisterMongoRepository } from '../../infra/db/mongodb/fetch-email-repository/fetch-email-register'
 import { DbFetchEmailRegister } from '../../data/usecases/check-email-register/db-fetch-email-register'
-import type { Controller, HttpRequest, HttpResponse } from '../../presentation/protocols'
+import type { Controller } from '../../presentation/protocols'
+import { LoggerControllerDecorator } from '../decorators/logs'
 
 export const makeSignUpController = (): Controller => {
   const salt = 12
@@ -19,16 +20,4 @@ export const makeSignUpController = (): Controller => {
   const dbAddAccount = new DbAddAccount(bcrypt, repository)
   const signupController = new SignUpController(emailValidatorAdapter, phoneValidatorAdapter, dbCheckEmail, dbAddAccount)
   return new LoggerControllerDecorator(signupController)
-}
-
-class LoggerControllerDecorator implements Controller {
-  private readonly controller: Controller
-  constructor (controller: Controller) {
-    this.controller = controller
-  }
-
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const httpResponse = await this.controller.handle(httpRequest)
-    return httpResponse
-  }
 }
