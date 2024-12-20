@@ -8,6 +8,7 @@ import { FetchEmailRegisterMongoRepository } from '../../infra/db/mongodb/fetch-
 import { DbFetchEmailRegister } from '../../data/usecases/check-email-register/db-fetch-email-register'
 import type { Controller } from '../../presentation/protocols'
 import { LoggerControllerDecorator } from '../decorators/logs'
+import { LogsMongoRepository } from '../../infra/db/mongodb/logs-repository/logs-mongo-repository'
 
 export const makeSignUpController = (): Controller => {
   const salt = 12
@@ -16,8 +17,9 @@ export const makeSignUpController = (): Controller => {
   const bcrypt = new BcryptAdapter(salt)
   const repository = new AccountMongoRepository()
   const fetchEmailRepository = new FetchEmailRegisterMongoRepository()
+  const logsErrorRepository = new LogsMongoRepository()
   const dbCheckEmail = new DbFetchEmailRegister(fetchEmailRepository)
   const dbAddAccount = new DbAddAccount(bcrypt, repository)
   const signupController = new SignUpController(emailValidatorAdapter, phoneValidatorAdapter, dbCheckEmail, dbAddAccount)
-  return new LoggerControllerDecorator(signupController)
+  return new LoggerControllerDecorator(signupController, logsErrorRepository)
 }
