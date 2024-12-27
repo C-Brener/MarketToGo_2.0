@@ -1,8 +1,9 @@
-import { MissingParamError, InvalidParamError } from '../../errors'
+import { MissingParamError, InvalidParamError, EmailAlreadyExist } from '../../errors'
 import { badRequest, serverError, ok } from '../../helpers/http-helper'
 import type {
   Controller,
   EmailValidator,
+  FetchEmailRegister,
   PhoneNumberValidator,
   AddAccount,
   HttpRequest,
@@ -11,13 +12,20 @@ import type {
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator
+  private readonly fetchEmail: FetchEmailRegister
   private readonly phoneNumberValidator: PhoneNumberValidator
   private readonly addAccount: AddAccount
 
-  constructor (emailValidator: EmailValidator, phoneNumberValidator: PhoneNumberValidator, addAccount: AddAccount) {
+  constructor (
+    emailValidator: EmailValidator,
+    phoneNumberValidator: PhoneNumberValidator,
+    fetchEmail: FetchEmailRegister,
+    addAccount: AddAccount
+  ) {
     this.emailValidator = emailValidator
     this.phoneNumberValidator = phoneNumberValidator
     this.addAccount = addAccount
+    this.fetchEmail = fetchEmail
   }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -39,6 +47,11 @@ export class SignUpController implements Controller {
         return badRequest(new InvalidParamError('email'))
       }
 
+      const emailAlreadyExist = await this.fetchEmail.checkEmailAlreadyExist(email as string)
+      if (emailAlreadyExist) {
+        return badRequest(new EmailAlreadyExist(email as string))
+      }
+
       const isValidPhoneNumber = this.phoneNumberValidator.isValid(phoneNumber as string, 'BR')
       if (!isValidPhoneNumber) {
         return badRequest(new InvalidParamError('phoneNumber'))
@@ -52,8 +65,7 @@ export class SignUpController implements Controller {
       })
       return ok(account)
     } catch (error) {
-      console.error(error)
-      return serverError()
+      return serverError(error as Error)
     }
   }
 }
