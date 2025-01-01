@@ -1,4 +1,4 @@
-import type { SignIn } from '../../../domain/models/signin'
+import type { SignInModel } from '../../../domain/models/signin'
 import type { Authentication } from '../../../domain/usecases/authentication'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
@@ -14,7 +14,7 @@ export class SignInController implements Controller {
     this.authentication = authentication
   }
 
-  async handle (httpRequest: HttpRequest<SignIn>): Promise<HttpResponse> {
+  async handle (httpRequest: HttpRequest<SignInModel>): Promise<HttpResponse> {
     try {
       const requiredFields = ['email', 'password']
       for (const field of requiredFields) {
@@ -22,7 +22,7 @@ export class SignInController implements Controller {
           return badRequest(new MissingParamError(field))
         }
       }
-      const { email, password } = httpRequest.body as Required<SignIn>
+      const { email, password } = httpRequest.body as Required<SignInModel>
       const isValidEmail = this.emailValidator.isValid(email)
       if (!isValidEmail) {
         return badRequest(new InvalidParamError('email'))
