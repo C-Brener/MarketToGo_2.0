@@ -1,4 +1,4 @@
-import type { AddAccountModel } from '../../../../domain/usecases/add-account'
+import type { AddAccountModel } from '../../../../domain/models/add_account'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { FetchEmailRegisterMongoRepository } from './fetch-email-register'
 

@@ -1,5 +1,6 @@
+import type { AddAccountModel } from '../../../domain/models/add_account'
 import { DbAddAccount } from './db-add-account'
-import type { AccountModel, AddAccountModel, AddAccountRepository, Encrypter } from './db-add-account-protocols'
+import type { AccountModel, AddAccountRepository, Encrypter } from './db-add-account-protocols'
 
 interface SutTypes {
   sut: DbAddAccount
