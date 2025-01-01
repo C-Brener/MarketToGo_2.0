@@ -1,8 +1,6 @@
-import type { SignInModel } from '../../../domain/models/signin'
-import type { Authentication } from '../../../domain/usecases/authentication'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, serverError, unauthorized } from '../../helpers/http-helper'
-import type { EmailValidator, HttpRequest } from '../signup/signup-protocols'
+import type { SignInModel, Authentication, HttpRequest, EmailValidator } from './signin-protocols'
 import { SignInController } from './signin'
 
 // Factory

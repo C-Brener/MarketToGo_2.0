@@ -1,9 +1,6 @@
-import type { SignInModel } from '../../../domain/models/signin'
-import type { Authentication } from '../../../domain/usecases/authentication'
+import type { SignInModel, Authentication, Controller, HttpRequest, HttpResponse, EmailValidator } from './signin-protocols'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, ok, serverError, unauthorized } from '../../helpers/http-helper'
-import type { Controller, HttpRequest, HttpResponse } from '../../protocols'
-import type { EmailValidator } from '../signup/signup-protocols'
 
 export class SignInController implements Controller {
   private readonly emailValidator: EmailValidator
