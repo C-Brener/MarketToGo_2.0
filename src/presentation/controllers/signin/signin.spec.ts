@@ -1,3 +1,4 @@
+import type { SignIn } from '../../../domain/models/signin'
 import type { Authentication } from '../../../domain/usecases/authentication'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import { badRequest, serverError } from '../../helpers/http-helper'
@@ -23,7 +24,7 @@ const makeAuthentication = (): Authentication => {
   return new AuthenticationStub()
 }
 
-const makeFakeRequest = (): HttpRequest => ({
+const makeFakeRequest = (): HttpRequest<SignIn> => ({
   body: {
     email: 'any_email@mail.com',
     password: 'any_password'
