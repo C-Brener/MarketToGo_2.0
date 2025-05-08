@@ -93,7 +93,38 @@ Learn more about GitHub Actions events in the [GitHub Actions Events]( https://d
 ### Special Conditional Functions
 * Special conditional is used to trigger conditional created inside the a workflow:
     * failure() -> Returns true when any previous Step or Job failed.
-    * success() -> Returns true when none of the prevcious steps have failed.
+    * success() -> Returns true when none of the previous steps have failed.
     * always() -> Causes the setp to always execute, even when cancelled.
     * cancelled() -> Returns true if the workflow has been cancelled.
 * The special conditional is necessary every time we need trigger a conditional created by us. 
+* Cache-Hit -> A boolean to indicate that an exact match was found for the key, which can help us create cache dependencies more easily, as you can see in this [commit](https://github.com/C-Brener/MarketToGo_2.0/commit/e630587b5060b5e24510936c26085be99bda6327)
+* continue-on-error -> This can be used when you need your pipeline to be approved even if there is an error, because this validation don't broken the jobe, but, send to you a message of error. But, if you check the context throught the steps.<step_id>.conclusion you will receive an success indepedns the job failure or not, however, if you check steps.<step_id>.outcome you will got a failure if the job failure
+
+### Matrix Strategy 
+* So, if you need put some versions to runs in your pipeline, you should use the matrix strategy.
+* Sintaxe:
+    ```yml
+        strategy:
+      matrix:
+        node-version: [16, 17, 20]
+        operating-system: [ubuntu-latest, windows-latest]
+        include:
+          - node-version: 18
+            operating-system: ubuntu-latest
+        exclude:
+    ```
+* In the code above, the node JS versioning strategy has been defined and if you use differents versions to run in your pipeline, the matrix is a good option to do this.
+* include -> Is an optional parameter, but if you use this, you can define more one strategy without put more one variable.
+* exclude -> Other optional parameter, where you can remove an strategy if necessary, because, when you define an strategy like  node-version and SO, the pipeline will be create an execution to each node version combined SO.
+
+### Reusable workflow
+* If all your workflows have the same step, this can probably be turned into a specific action, as this approach will reduce repeated code.
+* So, git actions, or CI/CD in general have the power to create yours private actions, and this approach called reusable.
+* To change an actions in reusable in your trigger is needed add a specifically trigger.
+    ```yml 
+        on: 
+        workflow_call:
+    ```
+* When you use this trigger, your action can be used as reusable. In this repository, we have an example of reusable actions, you can check it in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/10/commits/aa437019f44319195d1f759638291cd82d3132c3)
+* If you need to pass some property between the workflow and the action, you can use the input strategy to do this, as you can see in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/10/commits/c1ac8edf6e66eb22a56f4db79410bf7964840dbc), specifically in test_coverage.yml file.
+* But, if you need pass secrects, git actions has other strategy to provide this, can you see this strategy in this [commit](https://github.com/C-Brener/MarketToGo_2.0/pull/10/commits/98e7511ffa25a0bce0ef8edee10dde4a8bf2df1b)

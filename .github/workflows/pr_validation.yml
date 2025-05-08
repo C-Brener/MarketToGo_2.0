@@ -22,30 +22,9 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get the Code
-        uses: actions/checkout@v4
-      - name: Install NodeJs
-        uses: actions/setup-node@v4
-        with: 
-            node-version: 20
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        run: npm ci
-      - name: Execute Tests
-        id: run-tests
-        run: npm run test:verbose
-      - name: Upload test report
-        if: failure() && steps.run-tests.outcome != 'success'
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage/lcov-report
+    uses: ./.github/workflows/test_coverage.yml
+    with: 
+      input-name: input test caique
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -57,11 +36,15 @@ jobs:
         with: 
             node-version: 20
       - name: Cache dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build Project
         run: echo "Building the project in second Job"
